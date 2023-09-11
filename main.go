@@ -18,9 +18,24 @@ func getProducts(c *gin.Context) {
 	c.JSON(200, products)
 }
 
+func createProduct(c *gin.Context) {
+	var newProduct product
+
+	err := c.BindJSON(&newProduct)
+
+	if err != nil {
+		return
+	}
+
+	// add newProduct to the slice of products
+	products = append(products, newProduct)
+	c.JSON(200, newProduct)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/api", getProducts)
+	router.POST("/api", createProduct)
 	router.Run("localhost:3000")
 
 }
