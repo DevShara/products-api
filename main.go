@@ -2,25 +2,20 @@ package main
 
 import (
 	"errors"
+	"products-api/controller"
+	"products-api/model"
 
 	"github.com/gin-gonic/gin"
 )
 
-type product struct {
-	ID          string  `json:"id"`
-	Title       string  `json:"title"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-}
-
-var products = []product{
+var products = []model.Product{
 	{ID: "1", Title: "Samsung Galaxy A20s", Price: 20000.00, Description: "Samsung Galaxy A20s black mobile phone"},
 	{ID: "2", Title: "Redmi headphone", Price: 1000.00, Description: "Original Redmi headphone pair made in China"},
 }
 
 func productById(c *gin.Context) {
 	id := c.Param("id")
-	book, err := getProductById(id)
+	product, err := getProductById(id)
 
 	if err != nil {
 
@@ -28,10 +23,10 @@ func productById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, book)
+	c.JSON(200, product)
 }
 
-func getProductById(id string) (*product, error) {
+func getProductById(id string) (*model.Product, error) {
 	for _, p := range products {
 		if p.ID == id {
 			return &p, nil
@@ -42,11 +37,12 @@ func getProductById(id string) (*product, error) {
 }
 
 func getProducts(c *gin.Context) {
-	c.JSON(200, products)
+	allProducts := controller.GetAllProducts()
+	c.JSON(200, allProducts)
 }
 
 func createProduct(c *gin.Context) {
-	var newProduct product
+	var newProduct model.Product
 
 	err := c.BindJSON(&newProduct)
 
@@ -57,6 +53,8 @@ func createProduct(c *gin.Context) {
 	// add newProduct to the slice of products
 	products = append(products, newProduct)
 	c.JSON(200, newProduct)
+
+	controller.InsertProduct(newProduct)
 }
 
 // func updateProductPrice(c *gin.Context) {
@@ -84,15 +82,17 @@ func DeleteProduct(c *gin.Context) {
 
 	for i, p := range products {
 		if p.ID == id {
-
-			products[i] = products[len(products)-1] // Copy last element to index i.
-			products[len(products)-1] = product{}   // Erase last element (write zero value).
+			products[i] = products[len(products)-1]     // Copy last element to index i.
+			products[len(products)-1] = model.Product{} // Erase last element (write zero value).
 			products = products[:len(products)-1]
 		}
 	}
 }
 
 func main() {
+
+	controller.Init()
+
 	router := gin.Default()
 	router.GET("/api", getProducts)
 	router.GET("/api/:id", productById)
