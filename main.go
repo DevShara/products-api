@@ -2,8 +2,10 @@ package main
 
 import (
 	"errors"
+	"net/http"
 	"products-api/controller"
 	"products-api/model"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -57,31 +59,36 @@ func createProduct(c *gin.Context) {
 	controller.InsertProduct(newProduct)
 }
 
-// func updateProductPrice(c *gin.Context) {
-// 	id, ok := c.GetQuery("id")
-// 	price, ok := c.GetQuery("price")
+func updateProductPrice(c *gin.Context) {
+	id := c.Param("id")
+	price, priceOk := c.GetQuery("price")
 
-// 	if ok == false {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Missing id query param"})
-// 		return
-// 	}
+	//TODO - add multiple update 
+	//title, titleOk := c.GetQuery("title")
 
-// 	product, err := getProductById(id)
+	// if titleOk == false {
+	// 	c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Missing title query param"})
+	// 	return
+	// }
 
-// 	if err != nil {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Product not found"})
-// 		return
-// 	}
+	if priceOk == false {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Missing id query param"})
+		return
+	}
 
-// 	product.Price = price
-// }
+	priceInFloat, _ := strconv.ParseFloat(price, 64)
+	controller.UpdateProductPrice(id, priceInFloat)
+
+	// if err != ä
+	// 	c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Product not found"})
+	// 	return
+	// }	
+}
 
 func DeleteProduct(c *gin.Context) {
 
 	id := c.Param("id")
-
 	controller.DeleteProduct(id)
-
 
 	// for i, p := range products {
 	// 	if p.ID == id {
@@ -100,6 +107,7 @@ func main() {
 	router.GET("/api", getProducts)
 	router.GET("/api/:id", productById)
 	router.POST("/api", createProduct)
+	router.PUT("/api/:id", updateProductPrice)
 	router.DELETE("/api/:id", DeleteProduct)
 	router.Run("localhost:3000")
 

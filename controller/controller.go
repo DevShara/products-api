@@ -64,12 +64,6 @@ func InsertProduct(product model.Product) {
 	fmt.Println("Inserted 1 product", inserted.InsertedID)
 }
 
-// func UpdateProduct(product string) {
-// 	id, _ := primitive.ObjectIDFromHex(product)
-
-// 	fmt.Println(id)
-// }
-
 func GetAllProducts() []bson.M {
 	cur, err := collection.Find(context.Background(), bson.D{{}})
 	if err != nil {
@@ -95,7 +89,7 @@ func GetAllProducts() []bson.M {
 
 func DeleteProduct(productId string) {
 	id, _ := primitive.ObjectIDFromHex(productId)
-	fmt.Println(id)
+	//fmt.Println(productId, id )
 	filter := bson.M{"_id": id}
 	result, err := collection.DeleteOne(context.Background(), filter)
 
@@ -103,10 +97,21 @@ func DeleteProduct(productId string) {
 		log.Fatal(err)
 	}
 
-	//fmt.Println(reflect.TypeOf(result))
 
 	if(result.DeletedCount != 0){
 		fmt.Println(result.DeletedCount , "Product deleted")
 	}
-	
 }
+
+func UpdateProductPrice(productId string, price float64){
+	id, _ := primitive.ObjectIDFromHex(productId)
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"price": price } }
+
+	collection.UpdateOne(context.Background(), filter, update)
+}
+
+//TO
+// context.Background()
+// bson.M, bson.D
+// primitive.ObjectIDFromHex(productId)
