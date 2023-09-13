@@ -91,3 +91,16 @@ func GetAllProducts() []bson.M {
 
 	return products
 }
+
+// func DeleteProduct(productId string) {
+// 	id, _ := primitive.ObjectIDFromHex(productId)
+// 	fmt.Println(id)
+// 	filter := bson.M{"_id": id}
+// 	deleteCount, err := collection.DeleteOne(context.Background(), filter)
+
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	fmt.Println(deleteCount, "Product deleted")
+// }

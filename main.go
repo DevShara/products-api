@@ -8,10 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var products = []model.Product{
-	{ID: "1", Title: "Samsung Galaxy A20s", Price: 20000.00, Description: "Samsung Galaxy A20s black mobile phone"},
-	{ID: "2", Title: "Redmi headphone", Price: 1000.00, Description: "Original Redmi headphone pair made in China"},
-}
+// var products = []model.Product{
+// 	{ID: "1", Title: "Samsung Galaxy A20s", Price: 20000.00, Description: "Samsung Galaxy A20s black mobile phone"},
+// 	{ID: "2", Title: "Redmi headphone", Price: 1000.00, Description: "Original Redmi headphone pair made in China"},
+// }
 
 func productById(c *gin.Context) {
 	id := c.Param("id")
@@ -27,11 +27,11 @@ func productById(c *gin.Context) {
 }
 
 func getProductById(id string) (*model.Product, error) {
-	for _, p := range products {
-		if p.ID == id {
-			return &p, nil
-		}
-	}
+	// for _, p := range products {
+	// 	if p.ID == id {
+	// 		return &p, nil
+	// 	}
+	// }
 
 	return nil, errors.New("product not found")
 }
@@ -51,8 +51,8 @@ func createProduct(c *gin.Context) {
 	}
 
 	// add newProduct to the slice of products
-	products = append(products, newProduct)
-	c.JSON(200, newProduct)
+	// products = append(products, newProduct)
+	// c.JSON(200, newProduct)
 
 	controller.InsertProduct(newProduct)
 }
@@ -80,13 +80,15 @@ func DeleteProduct(c *gin.Context) {
 
 	id := c.Param("id")
 
-	for i, p := range products {
-		if p.ID == id {
-			products[i] = products[len(products)-1]     // Copy last element to index i.
-			products[len(products)-1] = model.Product{} // Erase last element (write zero value).
-			products = products[:len(products)-1]
-		}
-	}
+	controller.DeleteProduct(id)
+
+	// for i, p := range products {
+	// 	if p.ID == id {
+	// 		products[i] = products[len(products)-1]     // Copy last element to index i.
+	// 		products[len(products)-1] = model.Product{} // Erase last element (write zero value).
+	// 		products = products[:len(products)-1]
+	// 	}
+	// }
 }
 
 func main() {
