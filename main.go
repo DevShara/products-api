@@ -82,6 +82,7 @@ func DeleteProduct(c *gin.Context) {
 
 	controller.DeleteProduct(id)
 
+
 	// for i, p := range products {
 	// 	if p.ID == id {
 	// 		products[i] = products[len(products)-1]     // Copy last element to index i.

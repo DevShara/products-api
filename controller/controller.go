@@ -9,6 +9,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -92,15 +93,20 @@ func GetAllProducts() []bson.M {
 	return products
 }
 
-// func DeleteProduct(productId string) {
-// 	id, _ := primitive.ObjectIDFromHex(productId)
-// 	fmt.Println(id)
-// 	filter := bson.M{"_id": id}
-// 	deleteCount, err := collection.DeleteOne(context.Background(), filter)
+func DeleteProduct(productId string) {
+	id, _ := primitive.ObjectIDFromHex(productId)
+	fmt.Println(id)
+	filter := bson.M{"_id": id}
+	result, err := collection.DeleteOne(context.Background(), filter)
 
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// 	fmt.Println(deleteCount, "Product deleted")
-// }
+	//fmt.Println(reflect.TypeOf(result))
+
+	if(result.DeletedCount != 0){
+		fmt.Println(result.DeletedCount , "Product deleted")
+	}
+	
+}
