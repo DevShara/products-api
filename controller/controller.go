@@ -34,7 +34,6 @@ const colName = "products"
 var collection *mongo.Collection
 
 //connect with MongoDB
-
 func Init() {
 	//client option
 	clientOption := options.Client().ApplyURI(connectionString)
@@ -111,7 +110,3 @@ func UpdateProductPrice(productId string, price float64){
 	collection.UpdateOne(context.Background(), filter, update)
 }
 
-//TO
-// context.Background()
-// bson.M, bson.D
-// primitive.ObjectIDFromHex(productId)

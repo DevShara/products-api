@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"net/http"
 	"products-api/controller"
 	"products-api/model"
@@ -10,33 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// var products = []model.Product{
-// 	{ID: "1", Title: "Samsung Galaxy A20s", Price: 20000.00, Description: "Samsung Galaxy A20s black mobile phone"},
-// 	{ID: "2", Title: "Redmi headphone", Price: 1000.00, Description: "Original Redmi headphone pair made in China"},
-// }
-
-func productById(c *gin.Context) {
-	id := c.Param("id")
-	product, err := getProductById(id)
-
-	if err != nil {
-
-		c.JSON(404, gin.H{"message": "product not found"})
-		return
-	}
-
-	c.JSON(200, product)
-}
-
-func getProductById(id string) (*model.Product, error) {
-	// for _, p := range products {
-	// 	if p.ID == id {
-	// 		return &p, nil
-	// 	}
-	// }
-
-	return nil, errors.New("product not found")
-}
 
 func getProducts(c *gin.Context) {
 	allProducts := controller.GetAllProducts()
@@ -45,17 +17,11 @@ func getProducts(c *gin.Context) {
 
 func createProduct(c *gin.Context) {
 	var newProduct model.Product
-
 	err := c.BindJSON(&newProduct)
 
 	if err != nil {
 		return
 	}
-
-	// add newProduct to the slice of products
-	// products = append(products, newProduct)
-	// c.JSON(200, newProduct)
-
 	controller.InsertProduct(newProduct)
 }
 
@@ -78,37 +44,58 @@ func updateProductPrice(c *gin.Context) {
 
 	priceInFloat, _ := strconv.ParseFloat(price, 64)
 	controller.UpdateProductPrice(id, priceInFloat)
-
-	// if err != ä
-	// 	c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Product not found"})
-	// 	return
-	// }	
 }
+
 
 func DeleteProduct(c *gin.Context) {
 
 	id := c.Param("id")
 	controller.DeleteProduct(id)
-
-	// for i, p := range products {
-	// 	if p.ID == id {
-	// 		products[i] = products[len(products)-1]     // Copy last element to index i.
-	// 		products[len(products)-1] = model.Product{} // Erase last element (write zero value).
-	// 		products = products[:len(products)-1]
-	// 	}
-	// }
 }
 
-func main() {
+func productById(c *gin.Context) {
+	//TODO
+	// id := c.Param("id")
+	// product, err := getProductById(id)
 
+	// if err != nil {
+	// 	c.JSON(404, gin.H{"message": "product not found"})
+	// 	return
+	// }
+
+	// c.JSON(200, product)
+}
+
+// func getProductById(id string) (*model.Product, error) {
+// 	
+
+// 	return nil, errors.New("product not found")
+// }
+
+
+func main() {
+	//connect to MongoDB 
 	controller.Init()
 
+	//Create a router instance
 	router := gin.Default()
+
+	//Get all products
 	router.GET("/api", getProducts)
+
+	//Get a single product
 	router.GET("/api/:id", productById)
+
+	//Add a product
 	router.POST("/api", createProduct)
+
+	//Update the product price
 	router.PUT("/api/:id", updateProductPrice)
+
+	//Delete a product
 	router.DELETE("/api/:id", DeleteProduct)
+
+	//Listening and serving HTTP request
 	router.Run("localhost:3000")
 
 }
