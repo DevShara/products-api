@@ -88,7 +88,6 @@ func GetAllProducts() []bson.M {
 
 func DeleteProduct(productId string) {
 	id, _ := primitive.ObjectIDFromHex(productId)
-	//fmt.Println(productId, id )
 	filter := bson.M{"_id": id}
 	result, err := collection.DeleteOne(context.Background(), filter)
 
@@ -105,7 +104,7 @@ func DeleteProduct(productId string) {
 func UpdateProductPrice( product model.Product){
 	//id, _ := primitive.ObjectIDFromHex(product.ID)
 	filter := bson.M{"_id": product.ID}
-	update := bson.M{"$set": bson.M{"title": product.Title, "price": product.Price, "description": product.Description }  }
+	update := bson.M{"$set": bson.M{"title": product.Title, "price": product.Price, "description": product.Description, "category":product.Category, "image": product.Image }  }
 
 	collection.UpdateOne(context.Background(), filter, update)
 }

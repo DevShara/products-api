@@ -1,6 +1,30 @@
-{   
-    "title": "MSI Laptop",
-    "price": 3000,
-    "description":  "Black colour MSI Laptop"
-}
-
+[
+    {
+        "image": "https://res.cloudinary.com/du8se3elh/image/upload/v1694763004/6076d6377c3323153d4f7932b48aa382.jpg_720x720_juxgq8.jpg",
+        "price":  3600,
+        "title":"LouisWill Women's Watch",
+        "description":"LouisWill Women's Watch Fashion Heart Shaped Hollow Watch Diamond Inlaid Watch With Calendar 30M Waterproof Watch Luminous q Watch Quartz Watch Steel Band Watch",
+        "category": "women's fashion"
+    },
+    {
+        "image": "https://res.cloudinary.com/du8se3elh/image/upload/v1694763395/a33b6206643094ca49e50723dcf9ca34.jpg_720x720_prwn2n.jpg",
+        "price":  4500,
+        "title":"LouisWill Women's Bag",
+        "description":"LouisWill Women's Bag Super Soft PU Bag Handheld Bag One Shoulder Crossbody Basket Bag Mother and Child Bag Bucket Bag Cross-body Bags For Going Out Working Travelling",
+        "category": "women's fashion"
+    },
+    {
+        "image": "https://res.cloudinary.com/du8se3elh/image/upload/v1694763656/97959c08ae2ae3cabfe6d53c79b71dbd.jpg_720x720_lmrkgq.jpg",
+        "price":  2500,
+        "title":"LouisWill Women's Square Watch",
+        "description":"LouisWill Women's Square Watch Women's Fashion Watch Waterproof Luminous Watch Silicone Tape Watch Retro Quartz Watch With Digital Scale Ladies Watch Creative Luxury Women Watch",
+        "category": "women's fashion"
+    },
+    {
+        "image": "https://res.cloudinary.com/du8se3elh/image/upload/v1694763805/a6275784bc65b60806d86a1d53dddb7d.jpg_720x720_lknytw.jpg",
+        "price":  2800,
+        "title":"LouisWill Men’s Belt",
+        "description":"LouisWill Men’s Belt Genuine Leather Belt For Jeans Men Fashion Design Belt Pin Buckle With Leather Strap 120cm Adjustable Length Belt Business Dress Male Belt",
+        "category": "men's fashion"
+    }
+]

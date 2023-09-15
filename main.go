@@ -45,24 +45,7 @@ func DeleteProduct(c *gin.Context) {
 	controller.DeleteProduct(id)
 }
 
-func productById(c *gin.Context) {
-	//TODO
-	// id := c.Param("id")
-	// product, err := getProductById(id)
 
-	// if err != nil {
-	// 	c.JSON(404, gin.H{"message": "product not found"})
-	// 	return
-	// }
-
-	// c.JSON(200, product)
-}
-
-// func getProductById(id string) (*model.Product, error) {
-// 	
-
-// 	return nil, errors.New("product not found")
-// }
 
 
 func main() {
@@ -75,14 +58,11 @@ func main() {
 	//Get all products
 	router.GET("/api", getProducts)
 
-	//Get a single product
-	router.GET("/api/:id", productById)
-
 	//Add a product
 	router.POST("/api", createProduct)
 
 	//Update the product price
-	router.PUT("/api/:id", updateProductPrice)
+	router.PUT("/api/", updateProductPrice)
 
 	//Delete a product
 	router.DELETE("/api/:id", DeleteProduct)
