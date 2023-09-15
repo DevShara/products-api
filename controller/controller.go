@@ -102,10 +102,10 @@ func DeleteProduct(productId string) {
 	}
 }
 
-func UpdateProductPrice(productId string, price float64){
-	id, _ := primitive.ObjectIDFromHex(productId)
-	filter := bson.M{"_id": id}
-	update := bson.M{"$set": bson.M{"price": price } }
+func UpdateProductPrice( product model.Product){
+	//id, _ := primitive.ObjectIDFromHex(product.ID)
+	filter := bson.M{"_id": product.ID}
+	update := bson.M{"$set": bson.M{"title": product.Title, "price": product.Price, "description": product.Description }  }
 
 	collection.UpdateOne(context.Background(), filter, update)
 }

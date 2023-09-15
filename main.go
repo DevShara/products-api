@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"products-api/controller"
 	"products-api/model"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,24 +25,17 @@ func createProduct(c *gin.Context) {
 }
 
 func updateProductPrice(c *gin.Context) {
-	id := c.Param("id")
-	price, priceOk := c.GetQuery("price")
 
-	//TODO - add multiple update 
-	//title, titleOk := c.GetQuery("title")
+	var input model.Product
 
-	// if titleOk == false {
-	// 	c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Missing title query param"})
-	// 	return
-	// }
-
-	if priceOk == false {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Missing id query param"})
+	err := c.ShouldBindJSON(&input);
+	if  err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-	}
-
-	priceInFloat, _ := strconv.ParseFloat(price, 64)
-	controller.UpdateProductPrice(id, priceInFloat)
+	  }
+	  
+	//priceInFloat, _ := strconv.ParseFloat(price, 64)
+	controller.UpdateProductPrice(input)
 }
 
 
