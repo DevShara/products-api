@@ -5,6 +5,7 @@ import (
 	"products-api/controller"
 	"products-api/model"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -55,6 +56,9 @@ func main() {
 	//Create a router instance
 	router := gin.Default()
 
+	//Enable CORS
+	router.Use(cors.Default())
+
 	//Get all products
 	router.GET("/api", getProducts)
 
@@ -67,7 +71,10 @@ func main() {
 	//Delete a product
 	router.DELETE("/api/:id", DeleteProduct)
 
+	
+
+
 	//Listening and serving HTTP request
-	router.Run("localhost:3000")
+	router.Run(":3000")
 
 }
